@@ -22,8 +22,8 @@ class HospitalPatient(models.Model):
     @api.constrains('date_of_birth')
     def _check_date_of_birth(self):
         for rec in self:
-            if rec.date_of_birth and rec.date_of_birth >fields.Date.today():
-                raise ValidationError(_("the entered date of birth is not acceptabe!"))
+            if rec.date_of_birth and rec.date_of_birth > fields.Date.today():
+                raise ValidationError(_("the entered date of birth is not acceptabe !"))
 
     @api.model
     def create(self, vals):
