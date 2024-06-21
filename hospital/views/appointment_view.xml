@@ -56,7 +56,7 @@
                     <button name="action_done" string="Done" class="oe_highlight" data-hotkey="v"
                             type="object" invisible="state != 'in_consultation'"/>
                     <button name="%(hospital.action_cancel_appointment)d" string="Cancel" data-hotkey="z"
-                            type="action" context ="{'default_reason' : 'test'}"
+                            type="action" context ="{'default_reason' : 'test','hide_appointment': 1}"
                             invisible="state  not in ['draft','in_consultation']"/>
 <!--                    <button name="action_cancel" string="Cancel" data-hotkey="z"-->
 <!--                            type="object" invisible="state  not in ['draft','in_consultation']"/>-->
