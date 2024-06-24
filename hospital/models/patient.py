@@ -20,14 +20,22 @@ class HospitalPatient(models.Model):
     image = fields.Image(string='Image')
     tag_ids = fields.Many2many('patient.tag', string="tags")
     appointment_count = fields.Integer(string="Appointment Count", compute='_compute_appointment_count', store=True)
-    appointment_ids = fields.One2many('hospital.appointment','patient_id', string="Appointments")
+    appointment_ids = fields.One2many('hospital.appointment', 'patient_id', string="Appointments")
     parent = fields.Char(string="parent")
-    marital_status = fields.Selection([('married','Married'), ('single', 'Single')], string="marital Status", tracking =True)
-    partner_name =fields.Char(string="Partner Name")
+    marital_status = fields.Selection([('married', 'Married'), ('single', 'Single')], string="marital Status",
+                                      tracking=True)
+    partner_name = fields.Char(string="Partner Name")
+
     @api.depends('appointment_ids')
     def _compute_appointment_count(self):
         for rec in self:
-            rec.appointment_count = self.env['hospital.appointment'].search_count([('patient_id','=', rec.id)])
+            rec.appointment_count = self.env['hospital.appointment'].search_count([('patient_id', '=', rec.id)])
+
+    @api.ondelete(at_uninstall=False)
+    def _check_appointments(self):
+        for rec in self:
+            if rec.appointment_ids:
+                raise ValidationError(_("You can not delete a patient with appointments!"))
 
     @api.constrains('date_of_birth')
     def _check_date_of_birth(self):
