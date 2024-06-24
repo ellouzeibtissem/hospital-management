@@ -20,9 +20,17 @@
             <form>
                 <sheet>
                     <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h4>
+                            <field name="ref" readonly="1"/>
+                        </h4>
+                        <h2>
+                            <label for="name" class="oe_edit_only" string="Name"/>
+                            <field name="name"/>
+                        </h2>
+                    </div>
                     <group>
                         <group>
-                            <field name="name" string="Patient Name"/>
                             <field name="age"/>
                             <field name="date_of_birth"/>
                             <field name="appointment_count"/>
@@ -30,15 +38,16 @@
                             <field name="appointment_ids"/>
                         </group>
                         <group>
-                            <field name="ref"/>
                             <field name="gender" invisible="context.get('hide_gender')"/>
                             <field name="tag_ids" widget="Many2many_tags" options="{'color_field' : 'color'}"/>
                         </group>
                         <group string="other Information" name=" other_info">
                             <group>
                                 <field name="parent" invisible="age >18"/>
-                                <field name="marital_status" invisible="age >18" />
-                                <field name="partner_name" readonly="marital_status !='married'" />
+                                <field name="marital_status" invisible="age >18"/>
+                                <field name="partner_name" readonly="marital_status !='married'" required="marital_status =='married'"/>
+
+
                             </group>
                         </group>
                     </group>
