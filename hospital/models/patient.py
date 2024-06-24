@@ -55,6 +55,10 @@ class HospitalPatient(models.Model):
             print("write method is triggered", vals)
         return super(HospitalPatient, self).write(vals)
 
+    def action_done(self):
+        print("...................")
+        return
+
     @api.depends('date_of_birth')
     def _compute_age_(self):
         print('self...............', self)
