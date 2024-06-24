@@ -27,6 +27,10 @@
             <tree decoration-success="state=='done'" decoration-danger="state=='cancel'"
                   decoration-warning="state=='in_consultation'" decoration-info="state =='draft'" sample="1"
                   multi_edit="1">
+                <header>
+                    <button name="action_done" string="In Consultation" class="oe_highlight"
+                            type="object"/>
+                </header>
 
                 <field name="patient_id"/>
                 <field name="appointment_time"/>
@@ -51,8 +55,6 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_in_consultation" string="In Consultation" type="object"
-                            data-hotkey="x" invisible="state != 'draft'"/>
                     <button name="action_done" string="Done" class="oe_highlight" data-hotkey="v"
                             type="object" invisible="state != 'in_consultation'"/>
                     <button name="%(hospital.action_cancel_appointment)d" string="Cancel" data-hotkey="z"
