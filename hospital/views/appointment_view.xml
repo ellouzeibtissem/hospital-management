@@ -28,10 +28,10 @@
                   decoration-warning="state=='in_consultation'" decoration-info="state =='draft'" sample="1"
                   multi_edit="1">
                 <header>
-                    <button name="action_done" string="In Consultation" class="oe_highlight"
+                    <button name="action_in_consultation" string="In Consultation" class="oe_highlight"
                             type="object"/>
-                </header>
 
+                </header>
                 <field name="patient_id"/>
                 <field name="appointment_time"/>
                 <field name="booking_date" optional="show"/>
@@ -45,6 +45,10 @@
                        decoration-danger="state=='cancel'"
                        decoration-warning="state=='in_consultation'"
                        widget="badge"/>
+                <button name="action_done" class="fa fa-check btn-success"
+                        invisible="state !='in_consultation'" type="object" />
+                <button name="%(hospital.action_cancel_appointment)d" class="fa fa-times btn-danger" string="Cancel" type="action" context="{'default_reason' : 'test','hide_appointment': 1}"
+                            invisible="state  not in ['draft','in_consultation']"/>
             </tree>
         </field>
     </record>
@@ -55,13 +59,15 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="action_in_consultation" string="In Consultation" class="oe_highlight"
+                            type="object"/>
                     <button name="action_done" string="Done" class="oe_highlight" data-hotkey="v"
-                            type="object" invisible="state != 'in_consultation'"/>
+                            type="object"/>
                     <button name="%(hospital.action_cancel_appointment)d" string="Cancel" data-hotkey="z"
-                            type="action" context ="{'default_reason' : 'test','hide_appointment': 1}"
+                            type="action" context="{'default_reason' : 'test','hide_appointment': 1}"
                             invisible="state  not in ['draft','in_consultation']"/>
-<!--                    <button name="action_cancel" string="Cancel" data-hotkey="z"-->
-<!--                            type="object" invisible="state  not in ['draft','in_consultation']"/>-->
+                    <!--                    <button name="action_cancel" string="Cancel" data-hotkey="z"-->
+                    <!--                            type="object" invisible="state  not in ['draft','in_consultation']"/>-->
                     <button name="action_draft" string="Reset To Draft" data-hotkey="r"
                             type="object" invisible="state != 'cancel'"/>
                     <!--                    options="{'clickable': '1'}"-->
