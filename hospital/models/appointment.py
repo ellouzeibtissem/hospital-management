@@ -9,6 +9,7 @@ class HospitalAppointment(models.Model):
     _rec_name = 'ref'
 
     patient_id = fields.Many2one('hospital.patient', string="patient", ondelete='cascade')
+    operation_id = fields.Many2one('hospital.operation', string="operation")
     gender = fields.Selection(related='patient_id.gender')
     appointment_time = fields.Datetime(string='Appointment Time', default=fields.Datetime.now)
     booking_date = fields.Date(string=' Booking Date', default=fields.Date.context_today)
@@ -21,6 +22,7 @@ class HospitalAppointment(models.Model):
     doctor_id = fields.Many2one('res.users', string='Doctor', tracking=True)
     pharmacy_line_ids = fields.One2many('appointment.pharmacy.lines', 'appointment_id', string="Pharmacy Lines")
     hide_sales_prices = fields.Boolean(string=" Hide Sales Prices")
+
 
     def unlink(self):
         if self.state != 'draft':
