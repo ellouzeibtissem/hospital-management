@@ -12,7 +12,8 @@ class HospitalPatient(models.Model):
     name = fields.Char(string='Name', tracking=True)
     ref = fields.Char(string='Reference')
     date_of_birth = fields.Date(string='Date of birth')
-    age = fields.Integer(string='Age', compute='_compute_age_', inverse='_inverse_compute_age', tracking=True)
+    age = fields.Integer(string='Age', compute='_compute_age_', inverse='_inverse_compute_age', search='_search_age',
+                         tracking=True)
     gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string='Gender', tracking=True,
                               default='female')
     tags = fields.Char(string='Tags')
@@ -77,6 +78,13 @@ class HospitalPatient(models.Model):
         for rec in self:
             rec.date_of_birth = today - relativedelta.relativedelta(years=rec.age)
         return
+
+    def _search_age(self, operator, value):
+        date_of_birth = date.today() - relativedelta.relativedelta(years=value)
+        print("date_of_birth", date_of_birth)
+        start_of_year = date_of_birth.replace(day=1,month=1)
+        end_of_year = date_of_birth.replace(day=31,month=12)
+        return [('date_of_birth', '>=', start_of_year),('date_of_birth','<=', end_of_year)]
 
     def name_get(self):
         patient_list = []
