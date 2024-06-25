@@ -92,7 +92,7 @@
                         <group>
                             <field name="appointment_time"/>
                             <field name="hide_sales_prices" groups="base.group_no_one"/>
-                            <field name="ref"/>
+                            <field name="ref" readonly ="1" force_save ="1"/>
                             <button name="action_test" string="Object Button"
                                     confirm="Are you sure to execute the python code?"
                                     type="object" class="oe_highlight"/>
