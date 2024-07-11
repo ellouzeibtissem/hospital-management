@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="action_mark_as_done" model="ir.actions.server">
+        <field name="name">Mark As Done</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_hospital_appointment"/>
+        <field name="binding_model_id" ref="model_hospital_appointment"/>
+        <field name="state">code</field>
+        <field name="code">
+            for record in records:
+                if record.state == 'in_consultation':
+                    record.action_done()
+        </field>
+    </record>
     <record id="view_hospital_appointment_activity" model="ir.ui.view">
         <field name="name">hospital.appointment.activity</field>
         <field name="model">hospital.appointment</field>
@@ -32,7 +44,7 @@
                             type="object"/>
 
                 </header>
-                <field name="patient_id" />
+                <field name="patient_id"/>
                 <field name="appointment_time"/>
                 <field name="booking_date" optional="show"/>
                 <field name="ref" optional="show"/>
@@ -46,12 +58,13 @@
                        decoration-warning="state=='in_consultation'"
                        widget="badge"/>
                 <button name="action_done" class="fa fa-check btn-success"
-                        invisible="state !='in_consultation'" type="object" />
-                <button name="%(hospital.action_cancel_appointment)d" class="fa fa-times btn-danger" string="Cancel" type="action" context="{'default_reason' : 'test','hide_appointment': 1}"
-                            invisible="state  not in ['draft','in_consultation']"/>
+                        invisible="state !='in_consultation'" type="object"/>
+                <button name="%(hospital.action_cancel_appointment)d" class="fa fa-times btn-danger" string="Cancel"
+                        type="action" context="{'default_reason' : 'test','hide_appointment': 1}"
+                        invisible="state  not in ['draft','in_consultation']"/>
 
                 <groupby name="patient_id">
-                    <button name="action_done"  type="object" string="test"/>
+                    <button name="action_done" type="object" string="test"/>
                 </groupby>
 
             </tree>
@@ -71,8 +84,8 @@
                     <button name="%(hospital.action_cancel_appointment)d" string="Cancel" data-hotkey="z"
                             type="action" context="{'default_reason' : 'test','hide_appointment': 1}"
                             invisible="state  not in ['draft','in_consultation']"/>
-                                        <button name="action_cancel" string="Cancel" data-hotkey="v"
-                                                type="object" invisible="state  not in ['draft','in_consultation']"/>
+                    <button name="action_cancel" string="Cancel" data-hotkey="v"
+                            type="object" invisible="state  not in ['draft','in_consultation']"/>
                     <button name="action_draft" string="Reset To Draft" data-hotkey="r"
                             type="object" invisible="state != 'cancel'"/>
                     <!--                    options="{'clickable': '1'}"-->
@@ -85,7 +98,7 @@
                     </h1>
                     <group>
                         <group>
-                            <field name="patient_id" widget="selection" />
+                            <field name="patient_id" widget="selection"/>
                             <field name="booking_date" help="date of booking"/>
                             <field name="gender"/>
                             <field name="doctor_id" widget="many2one_avatar_user" default_focus="1"/>
@@ -95,7 +108,7 @@
                         <group>
                             <field name="appointment_time"/>
                             <field name="hide_sales_prices" groups="base.group_no_one"/>
-                            <field name="ref" readonly ="1" force_save ="1"/>
+                            <field name="ref" readonly="1" force_save="1"/>
                             <button name="action_test" string="Object Button"
                                     confirm="Are you sure to execute the python code?"
                                     type="object" class="oe_highlight"/>
