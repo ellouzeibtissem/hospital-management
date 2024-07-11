@@ -32,7 +32,18 @@
         </field>
     </record>
 
-    <record id="view_hospital_appointment_tree" model="ir.ui.view">
+    <record id="view_hospital_appointment_calendar" model="ir.ui.view">
+        <field name="name">hospital.appointment.calendar</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+           <calendar string="Appointments" date_start="booking_date" mode="month" date_delay="duration" color="state" hide_time="True" event_open_popup="True"
+           form_view_id="%(hospital.view_hospital_appointment_form)d">
+                <field name="patient_id" filters="1" avatar_field="image"/>
+                <field name="state" invisible="1" filters="1"/>
+            </calendar>
+        </field>
+    </record>
+  <record id="view_hospital_appointment_tree" model="ir.ui.view">
         <field name="name">hospital.appointment.tree</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
@@ -66,7 +77,7 @@
                 <groupby name="patient_id">
                     <button name="action_done" type="object" string="test"/>
                 </groupby>
-
+<!--                <field name="progress"/>-->
             </tree>
         </field>
     </record>
@@ -103,6 +114,7 @@
                             <field name="gender"/>
                             <field name="doctor_id" widget="many2one_avatar_user" default_focus="1"/>
                             <field name="operation_id"/>
+                            <field name="duration"/>
 
                         </group>
                         <group>
@@ -171,7 +183,7 @@
         <field name="name">Appointments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.appointment</field>
-        <field name="view_mode">tree,form,activity</field>
+        <field name="view_mode">tree,form,activity,calendar</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
