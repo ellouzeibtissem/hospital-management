@@ -49,9 +49,11 @@
                         invisible="state !='in_consultation'" type="object" />
                 <button name="%(hospital.action_cancel_appointment)d" class="fa fa-times btn-danger" string="Cancel" type="action" context="{'default_reason' : 'test','hide_appointment': 1}"
                             invisible="state  not in ['draft','in_consultation']"/>
+
                 <groupby name="patient_id">
                     <button name="action_done"  type="object" string="test"/>
                 </groupby>
+
             </tree>
         </field>
     </record>
@@ -69,8 +71,8 @@
                     <button name="%(hospital.action_cancel_appointment)d" string="Cancel" data-hotkey="z"
                             type="action" context="{'default_reason' : 'test','hide_appointment': 1}"
                             invisible="state  not in ['draft','in_consultation']"/>
-                    <!--                    <button name="action_cancel" string="Cancel" data-hotkey="z"-->
-                    <!--                            type="object" invisible="state  not in ['draft','in_consultation']"/>-->
+                                        <button name="action_cancel" string="Cancel" data-hotkey="v"
+                                                type="object" invisible="state  not in ['draft','in_consultation']"/>
                     <button name="action_draft" string="Reset To Draft" data-hotkey="r"
                             type="object" invisible="state != 'cancel'"/>
                     <!--                    options="{'clickable': '1'}"-->
@@ -83,10 +85,10 @@
                     </h1>
                     <group>
                         <group>
-                            <field name="patient_id" widget="selection" default_focus="1"/>
+                            <field name="patient_id" widget="selection" />
                             <field name="booking_date" help="date of booking"/>
                             <field name="gender"/>
-                            <field name="doctor_id" widget="many2one_avatar_user"/>
+                            <field name="doctor_id" widget="many2one_avatar_user" default_focus="1"/>
                             <field name="operation_id"/>
 
                         </group>
@@ -112,9 +114,9 @@
                             <group>
                             </group>
                         </page>
-                        <page string="pharmacy" name="pharmacy">
+                        <pa.ge string="pharmacy" name="pharmacy">
                             <field name="pharmacy_line_ids">
-                                <tree editable="bottom">
+                                <tree editable=" top">
                                     <field name="product_id"/>
                                     <field name="price_unit" column_invisible="True"
                                            options='{"hide_sales_prices": true}'/>
@@ -131,7 +133,7 @@
                             </field>
                             <group>
                             </group>
-                        </page>
+                        </pa.ge>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">

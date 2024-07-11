@@ -62,6 +62,11 @@
 
 
                             </group>
+                            <group>
+                                <field name="phone" widget="phone"/>
+                                <field name="email" widget="email"/>
+                                <field name="website" widget="url"/>
+                            </group>
                         </group>
                     </group>
                 </sheet>
